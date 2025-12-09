@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heart Glow & Panda Animation</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: url("file:///C:/Users/sanji/Downloads/Gemini_Generated_Image_fyxbr9fyxbr9fyxb.png") no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* 💗 Heart container */
+    .heart-container {
+      position: relative;
+      width: 420px;
+      height: 550px;
+      cursor: pointer;
+    }
+
+    /* 💗 Heart image */
+    .heart-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      z-index: 1;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    /* ✨ Glow + Shake on hover */
+    .heart-container:hover .heart-img {
+      filter: drop-shadow(0 0 15px rgba(255, 105, 180, 0.9))
+              drop-shadow(0 0 30px rgba(255, 182, 193, 0.7))
+              brightness(1.1);
+      animation: shake 0.4s infinite;
+      transform: scale(1.05);
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1.05); }
+      25% { transform: translate(2px, -2px) rotate(-1deg) scale(1.05); }
+      50% { transform: translate(-2px, 2px) rotate(1deg) scale(1.05); }
+      75% { transform: translate(2px, 2px) rotate(-1deg) scale(1.05); }
+    }
+
+    /* 🐼 Panda image */
+    .panda {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      transition: transform 1s ease, opacity 1s ease;
+      width: 200px;
+      z-index: 2;
+    }
+
+    .heart-container.show-panda .panda {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+
+    /* 💚 Heart GIF */
+    .heart-gif {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 70%;   /* Wide */
+      height: 48%;  /* Shorter */
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      z-index: 5;
+      object-fit: cover;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+      pointer-events: none;
+      clip-path: url(#heartClip);
+    }
+
+    /* 💚 Show + Animate */
+    .heart-container.show-gif .heart-gif {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      animation: heartBeat 2s ease-in-out infinite, heartShake 0.6s infinite;
+    }
+
+    /* 💚 Glowing + Beating animation */
+    @keyframes heartBeat {
+      0% {
+        transform: translate(-50%, -50%) scale(0.9);
+        filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.6))
+                drop-shadow(0 0 20px rgba(0, 255, 100, 0.4))
+                brightness(1);
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.05);
+        filter: drop-shadow(0 0 25px rgba(0, 255, 0, 1))
+                drop-shadow(0 0 40px rgba(0, 255, 100, 0.8))
+                brightness(1.3);
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(0.9);
+        filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.6))
+                drop-shadow(0 0 20px rgba(0, 255, 100, 0.4))
+                brightness(1);
+      }
+    }
+
+    /* 💚 Shaking animation (gentle wobble) */
+    @keyframes heartShake {
+      0%, 100% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+      25% { transform: translate(-50%, -51%) rotate(-1deg) scale(1.02); }
+      50% { transform: translate(-49%, -50%) rotate(1deg) scale(1.04); }
+      75% { transform: translate(-50%, -49%) rotate(-1deg) scale(1.02); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 💖 SVG heart clip path -->
+  <svg width="0" height="0">
+    <clipPath id="heartClip" clipPathUnits="objectBoundingBox">
+      <path d="M0.5,0.9C0.1,0.6,-0.05,0.3,0.2,0.1C0.38,-0.05,0.5,0.2,0.5,0.2S0.62,-0.05,0.8,0.1C1.05,0.3,0.9,0.6,0.5,0.9Z"/>
+    </clipPath>
+  </svg>
+
+  <div class="heart-container" id="heartContainer">
+    <!-- 💖 Heart Image -->
+    <img 
+      src="img01.png"
+      alt="Heart"
+      class="heart-img"
+    >
+
+    <!-- 🐼 Panda -->
+    <img 
+      src="img02.png"
+      alt="Panda" 
+      class="panda"
+    >
+
+    <!-- 💚 Animated Heart GIF -->
+    <img 
+      src="img03.png"
+      alt="Heart GIF"
+      class="heart-gif"
+    >
+  </div>
+
+  <script>
+    const heart = document.getElementById('heartContainer');
+
+    heart.addEventListener('click', () => {
+      heart.classList.add('show-panda');
+
+      setTimeout(() => {
+        heart.classList.remove('show-panda');
+        heart.classList.add('show-gif');
+      }, 1500);
+    });
+
+    heart.addEventListener('mouseleave', () => {
+      heart.classList.remove('show-gif');
+    });
+  </script>
+</body>
+</html>
